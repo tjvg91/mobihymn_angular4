@@ -1,7 +1,7 @@
-<ion-tabs class="tabs-md-dark">
-    <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>
-    <ion-tab [root]="tab2Root" tabTitle="Read" tabIcon="glasses"></ion-tab>
-    <ion-tab [root]="tab3Root" tabTitle="Search" tabIcon="search"></ion-tab>
-    <ion-tab [root]="tab4Root" tabTitle="About" tabIcon="information-circle"></ion-tab>
-    <ion-tab [root]="tab5Root" tabTitle="Settings" tabIcon="settings"></ion-tab>
+<ion-tabs class="tabs-md-dark" #myTabs>
+    <ion-tab [root]="tab1Root" tabTitle="Library" tabIcon="home"></ion-tab>
+    <ion-tab [root]="tab2Root" tabTitle="Read" tabIcon="glasses" enabled="activeHymnal"></ion-tab>
+    <ion-tab [root]="tab3Root" tabTitle="Search" tabIcon="search" enabled="activeHymnal"></ion-tab>
+    <ion-tab [root]="tab4Root" tabTitle="About" tabIcon="information-circle" enabled="activeHymnal"></ion-tab>
+    <ion-tab [root]="tab5Root" tabTitle="Settings" tabIcon="settings" enabled="activeHymnal"></ion-tab>
 </ion-tabs>

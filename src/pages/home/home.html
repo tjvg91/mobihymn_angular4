@@ -1,27 +1,39 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="star-outline"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Library</ion-title>
+        <!--<ion-buttons end>
+            <button ion-button icon-only>
+            <ion-icon name="star-outline"></ion-icon>
+          </button>
+        </ion-buttons>-->
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>{{title}}</h2>
-   <div *ngFor="let hymnal of hymnalList">
-    <ion-card>
-      <img src={{hymnal.img}}/>
-      <ion-card-content>
-        <ion-card-title>
-          {{hymnal.name}}
-        </ion-card-title>
-        <p>
-          {{hymnal.count}} hymnals
-        </p>
-      </ion-card-content>
-    </ion-card>
-  </div>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-md-6 *ngFor="let hymnal of hymnalList">
+                <ion-card>
+                    <div class="card-image">
+                        <img src="{{ 'assets/' + hymnal.image}}" />
+                    </div>
+                    <ion-card-content>
+                        <ion-card-title>
+                            {{hymnal.name}}
+                        </ion-card-title>
+                        <p>
+                            {{hymnal.count}} hymnals
+                        </p>
+                        <ion-row>
+                            <ion-col offset-10 col-2>
+                                <button ion-button small (click)="setActiveHymnal(hymnal.id)">
+                                  <ion-icon name="return-right"></ion-icon>
+                                </button>
+                            </ion-col>
+                        </ion-row>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

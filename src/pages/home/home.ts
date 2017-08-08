@@ -1,7 +1,11 @@
-import { Component, NgZone, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { NavController } from 'ionic-angular';
 import { GlobalService } from '../../services/global-service';
+import * as _ from 'lodash';
+
+import { Tabs } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-home',
@@ -11,19 +15,23 @@ import { GlobalService } from '../../services/global-service';
 export class HomePage implements OnInit{
   title: string;
   hymnalList: Array<object>;
-  zone: NgZone;
   myHttp: Http;
   myGlobal: GlobalService;
 
-  constructor(public homeCtrl: NavController, global : GlobalService, http: Http, ngZone : NgZone) {
-    this.zone = ngZone;
+  tabPage: TabsPage
+
+  constructor(public homeCtrl: NavController, global : GlobalService, http: Http, tabPage: TabsPage) {
     this.title = "MobiHymn";
     this.myGlobal = global;
     this.myHttp = http;
+    this.tabPage = tabPage;
   }
   
-  onHttpSuccess(){
-    console.log(this);
+  setActiveHymnal(hymnalId : string){
+    this.myGlobal.activeHymnal = _.filter(this.hymnalList, function(h){
+      return h.id == hymnalId;
+    })[0];
+    this.tabPage.tabRef.select(1);
   }
 
   ngOnInit(){
