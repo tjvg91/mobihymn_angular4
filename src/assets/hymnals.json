@@ -1,0 +1,22 @@
+{
+  "output": [
+    {
+      "id": "1",
+      "name": "Trinity Hymnal: Baptist Edition",
+      "image": "images/hymnals/hymnal1.jpg",
+      "count": "800",
+      "lastNum": "774",
+      "color": "blue",
+      "themes": []
+    },
+    {
+      "id": "2",
+      "name": "Trinity Hymnal: Baptist Edition (Extended)",
+      "image": "images/hymnals/hymnal2.jpg",
+      "count": "819",
+      "lastNum": "793",
+      "color": "blue",
+      "themes": []
+    }
+  ]
+}
