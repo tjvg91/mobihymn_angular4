@@ -29,18 +29,7 @@ export class GlobalService {
         this.hymnals = newValue;        
     }
 
-    getHymnals(http: Http, success: Function){        
-        http.get('../assets/hymnals.json').map(res => res.json()).subscribe(res => {
-            this.hymnals = res.output;
-            
-            /*this.hymnals.forEach(h =>{
-                
-            })*/
-            /*http.get('../assets/hymnals.json').map(res => res.json()).subscribe(res1 => {
-                this.hymns = res1.output;
-            })*/
-
-            success(this.hymnals);
-        });
+    getHymnals(http: Http){        
+        return http.get('../assets/hymnals.json').map(res => res.json());
     }
 }
