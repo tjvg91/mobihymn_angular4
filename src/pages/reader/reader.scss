@@ -1,3 +1,20 @@
 page-reader {
+    .hymn-content{
+        margin-bottom: 20px;
+        display: block;
 
+        .hymn-title{
+            margin-bottom: 20px;
+        }        
+
+        .hymn-stanza {
+            display: block;
+            margin-bottom: 20px;
+            
+            .hymn-line{
+                display: block;
+                line-height: 150%;
+            }
+        }
+    }
 }

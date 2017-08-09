@@ -26,10 +26,9 @@ export class TabsPage {
   activeHymnal: string;
   activeHymn: string;
 
-  @ViewChild('myTabs') tabRef: Tabs;
+  @ViewChild('#myTabs') tabRef: Tabs;
 
   constructor(myGlobal : GlobalService) {
     this.activeHymnal = myGlobal.activeHymnal;
-    
   }
 }

@@ -1,50 +1,63 @@
-import { Component, ChangeDetectorRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { NavController } from 'ionic-angular';
 import { GlobalService } from '../../services/global-service';
 import * as _ from 'lodash';
 
-import { Tabs } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
-
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
-  providers: [ GlobalService ]
+  templateUrl: 'home.html'
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit, OnDestroy{
   title: string;
   hymnalList: Array<object>;
+  hymnList:object;
   myHttp: Http;
   myGlobal: GlobalService;
 
-  tabPage: TabsPage
+  hymnalSubscribe: any;
+  hymnSubscribe: any;
 
-  constructor(public homeCtrl: NavController, global : GlobalService, http: Http, tabPage: TabsPage) {
+  constructor(public homeCtrl: NavController, global : GlobalService, http: Http) {
     this.title = "MobiHymn";
     this.myGlobal = global;
     this.myHttp = http;
-    this.tabPage = tabPage;
+    this.hymnalSubscribe = global.hymnalChange.subscribe((value) => {
+      this.hymnalList = value;
+
+      for(var i = 0; i < this.hymnalList.length; i++){
+        let hymnalID = this.hymnalList[i]['id'];
+        this.myGlobal.getHymns(this.myHttp, hymnalID).subscribe(res1 => {
+          this.myGlobal.addToHymns('hymnal' + hymnalID, res1);
+        });
+      }
+    });
   }
   
   setActiveHymnal(hymnalId : string){
-    this.myGlobal.activeHymnal = _.filter(this.hymnalList, function(h){
+    let activeHymnal = _.filter(this.hymnalList, function(h){
       return h.id == hymnalId;
-    })[0];
-    this.tabPage.tabRef.select(1);
+    })[0]
+    this.myGlobal.setActiveHymnal(activeHymnal['id']);
+    this.myGlobal.setActiveHymn('1');
+
+    this.goToReader(true);
+  }
+
+  goToReader(enable: boolean){
+    this.homeCtrl.parent.getByIndex(1).enabled = enable;
+    this.homeCtrl.parent.getByIndex(2).enabled = enable;
+    this.homeCtrl.parent.select(1);
   }
 
   ngOnInit(){
     this.myGlobal.getHymnals(this.myHttp).subscribe(res => {
-            console.log(res.output);
-            this.myGlobal.hymnals = res.output;
-            this.hymnalList = this.myGlobal.hymnals;
-            /*this.hymnals.forEach(h =>{
-                
-            })*/
-            /*http.get('../assets/hymnals.json').map(res => res.json()).subscribe(res1 => {
-                this.hymns = res1.output;
-            })*/
-        });;
+      this.myGlobal.setHymnals(res.output);
+    });
+  }
+
+  ngOnDestroy(){
+    this.hymnalSubscribe.unsubscribe();
+    this.hymnSubscribe.unsubscribe();
   }
 }
