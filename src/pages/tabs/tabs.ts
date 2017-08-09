@@ -12,8 +12,7 @@ import { GlobalService } from '../../services/global-service';
 
 
 @Component({
-  templateUrl: 'tabs.html',
-  providers: [ GlobalService ]
+  templateUrl: 'tabs.html'
 })
 
 export class TabsPage {
@@ -29,6 +28,6 @@ export class TabsPage {
   @ViewChild('#myTabs') tabRef: Tabs;
 
   constructor(myGlobal : GlobalService) {
-    this.activeHymnal = myGlobal.activeHymnal;
+    this.activeHymnal = myGlobal.getActiveHymnal();
   }
 }

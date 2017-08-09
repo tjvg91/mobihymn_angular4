@@ -5,53 +5,53 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-buttons end>
-      <button ion-button icon-only (click)="dismiss()">
+    <ion-buttons end>
+        <button ion-button icon-only (click)="dismiss()" clear>
         <ion-icon name="close"></ion-icon>
       </button>
-  </ion-buttons>
-  <ion-segment [(ngModel)]="inputType">
-    <ion-segment-button value="all_hymns">
-      All hymns
-    </ion-segment-button>
-    <ion-segment-button value="bookmarks">
-      Bookmarks
-    </ion-segment-button>
-    <ion-segment-button value="recent">
-      Recent
-    </ion-segment-button>
-  </ion-segment>
+    </ion-buttons>
+    <ion-segment [(ngModel)]="inputType">
+        <ion-segment-button value="all_hymns">
+            All hymns
+        </ion-segment-button>
+        <ion-segment-button value="bookmarks">
+            Bookmarks
+        </ion-segment-button>
+        <ion-segment-button value="recent">
+            Recent
+        </ion-segment-button>
+    </ion-segment>
 </ion-header>
 
 
 <ion-content padding>
-  <div [ngSwitch]="inputType">
-    <div *ngSwitchCase="'all_hymns'">
-      <ion-searchbar (ionInput)="filterHymns($event)" [showCancelButton]="true" placeholder="Search hymn" type="number"></ion-searchbar>
-      <ion-list *ngSwitchCase="'all_hymns'">
-        <ion-item *ngFor="let hymn of hymnList | slice:0:hymnLimit;" (click)="setActiveHymn(hymn)">
-          <h2>{{ 'Hymn #' + hymn.title }}</h2>
-          <p>{{ hymn.firstLine }}</p>
-        </ion-item>
-      </ion-list>
-      <p class="indicator">Displaying {{ hymnLimit + ' of ' + hymnList.length }} hymns</p>
-      <!-- <ion-infinite-scroll (ionInfinite)="hymnsInfinite($event)">
+    <div [ngSwitch]="inputType">
+        <div *ngSwitchCase="'all_hymns'">
+            <ion-searchbar (ionInput)="filterHymns($event)" [showCancelButton]="true" placeholder="Search hymn" type="number" [(ngModel)]="hymnFilter"></ion-searchbar>
+            <ion-list *ngSwitchCase="'all_hymns'">
+                <ion-item *ngFor="let hymn of hymnList | slice:0:hymnLimit;" (click)="setActiveHymn(hymn)">
+                    <h2>{{ 'Hymn #' + hymn.title }}</h2>
+                    <p>{{ hymn.firstLine }}</p>
+                </ion-item>
+            </ion-list>
+            <p class="indicator">{{ getIndicator() }}</p>
+            <!-- <ion-infinite-scroll (ionInfinite)="hymnsInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll> -->
+        </div>
+        <div *ngSwitchCase="'bookmarks'">
+            <ion-list *ngSwitchCase="'bookmarks'">
+                <ion-item>
+                    <h2>Luna</h2>
+                </ion-item>
+            </ion-list>
+        </div>
+        <div *ngSwitchCase="'recent'">
+            <ion-list *ngSwitchCase="'recent'">
+                <ion-item>
+                    <h2>Luna</h2>
+                </ion-item>
+            </ion-list>
+        </div>
     </div>
-    <div *ngSwitchCase="'bookmarks'">
-      <ion-list *ngSwitchCase="'bookmarks'">
-        <ion-item>
-          <h2>Luna</h2>
-        </ion-item>
-      </ion-list>
-    </div>
-    <div *ngSwitchCase="'recent'">
-      <ion-list *ngSwitchCase="'recent'">
-        <ion-item>
-          <h2>Luna</h2>
-        </ion-item>
-      </ion-list>
-    </div>
-  </div>
 </ion-content>

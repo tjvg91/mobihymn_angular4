@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 
 import { GlobalService } from '../../services/global-service';
@@ -23,17 +23,22 @@ export class InputModalPage{
   myGlobal : GlobalService;
   hymnList: Array<object> = new Array<object>();
   activeHymnal: string;
+  activeHymn: string;
   navParams: NavParams
   hymnLimit : Number;
   hymnSubscribe: any;
+  hymnFilter: string;
+  elementRef: ElementRef
+
+  Math: any;
 
   origHymnList : Array<object>;
 
-  constructor(public viewCtrl: ViewController, global : GlobalService, inputParams: NavParams) {
+  constructor(public viewCtrl: ViewController, inputParams: NavParams, elementRef : ElementRef) {
     this.inputType = "all_hymns";
-    this.myGlobal = global;
     this.hymnLimit = 5;  
     this.navParams = inputParams;
+    this.elementRef = elementRef;
   }
 
   dismiss() {
@@ -43,29 +48,35 @@ export class InputModalPage{
   ionViewDidLoad(){
     this.hymnList = this.navParams.get('allHymns')
     this.activeHymnal = this.navParams.get('activeHymnal');
+    this.myGlobal = this.navParams.get('globalService');
+    
+    this.activeHymn = this.myGlobal.getActiveHymn();
+    let activeHymn = this.activeHymn
+    this.hymnFilter = _.filter(this.hymnList, item => {
+      return item.id == activeHymn;
+    })[0].number;
 
     this.origHymnList = this.hymnList.map(x => Object.assign({}, x));
   }
 
-  hymnsInfinite(scrollEv: any){
-    this.hymnLimit = this.hymnList.length;
-    console.log(scrollEv);
-  }
-
   filterHymns(event){
-    let st = event.target.value;
+    let st = this.hymnFilter;
     if(st)
       this.hymnList = this.origHymnList.filter((item) => {
         return new RegExp(st).test(item['number']) || new RegExp(st).test(item['firstLine']);
-      })
+      });
     else
       this.hymnList = this.origHymnList;
-    console.log(event);
   }
 
   setActiveHymn(hymn){
     this.myGlobal.setActiveHymn(hymn['id']);
-    console.log(this.myGlobal);
     this.viewCtrl.dismiss();
+  }
+
+  getIndicator(){
+    let limit = this.hymnLimit;
+    let length = this.hymnList.length;
+    return 'Displaying ' + Math.min(+limit, length) + ' of ' + this.hymnList.length + ' hymns';
   }
 }

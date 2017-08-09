@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { GlobalService } from '../../services/global-service';
+
 /**
  * Generated class for the SearchPage page.
  *
@@ -14,8 +16,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'search.html',
 })
 export class SearchPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  myGlobal: GlobalService;
+  constructor(public navCtrl: NavController, public navParams: NavParams, global : GlobalService) {
+    this.myGlobal = global;
+    console.log(global);
   }
 
   ionViewDidLoad() {
