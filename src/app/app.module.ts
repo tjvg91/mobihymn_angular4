@@ -4,7 +4,6 @@ import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { GlobalService } from '../services/global-service';
-import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 
 import { AboutPage } from '../pages/about/about';
 import { SettingsPage } from '../pages/settings/settings';
@@ -34,7 +33,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    Angular2FontawesomeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

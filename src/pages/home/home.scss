@@ -21,14 +21,12 @@ page-home {
             }
         }
     }
-    
-    ion-card{
-         .card-image {
+    ion-card {
+        .card-image {
             height: 200px;
             overflow: hidden;
-         }
-
-         ion-card-content{
+        }
+        ion-card-content {
             ion-card-title {
                 font-size: 1.2em !important;
                 color: #fff !important;
@@ -37,12 +35,16 @@ page-home {
                 font-size: 0.8em !important;
                 color: #fff;
             }
-         }
+        }
     }
-
-    @media screen and (min-width: 283px) and (max-width: 575px){
-        .col{
+    @media screen and (min-width: 283px) and (max-width: 575px) {
+        .col {
             flex-basis: 100% !important;
+        }
+    }
+    @media screen and (min-width: 576px) and (max-width: 767px) {
+        .col {
+            flex-basis: 1 !important;
         }
     }
 }

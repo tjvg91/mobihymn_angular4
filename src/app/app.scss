@@ -15,3 +15,17 @@
 .content .scroll-content {
     overflow: auto;
 }
+
+.alert-wrapper {
+    background-color: #242424 !important;
+    color: #999;
+    [ng-reflect-ng-switch] {
+        display: flex;
+        .alert-radio-group {
+            width: 100%;
+        }
+    }
+    .alert-radio-label {
+        color: #999;
+    }
+}
