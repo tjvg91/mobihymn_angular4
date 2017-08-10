@@ -1,3 +1,13 @@
 page-settings-popover {
+    ion-content .scroll-content{
+        padding: 0 !important;
 
+        ion-list-header{
+            margin: 0 !important;
+            min-height: 0 !important;
+            ion-label{
+                margin: 10px 0 0 !important;
+            }
+        }
+    }
 }

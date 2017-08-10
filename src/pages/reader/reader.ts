@@ -3,6 +3,7 @@ import { IonicPage, NavController, PopoverController, ModalController } from 'io
 import { GlobalService } from '../../services/global-service';
 import { InputModalPage } from '../../pages/input-modal/input-modal';
 import { SettingsPopoverPage } from '../../pages/settings-popover/settings-popover';
+
 import * as _ from 'lodash';
 
 /**

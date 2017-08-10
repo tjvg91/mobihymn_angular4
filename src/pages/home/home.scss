@@ -7,7 +7,7 @@ page-home {
             ion-card-content ion-card-title {
                 position: absolute;
                 top: 36%;
-                font-size: 1.0em;
+                font-size: 1.7em !important;
                 width: 100%;
                 font-weight: bold;
                 color: #fff;
@@ -21,8 +21,28 @@ page-home {
             }
         }
     }
-    ion-card .card-image {
-        height: 200px;
-        overflow: hidden;
+    
+    ion-card{
+         .card-image {
+            height: 200px;
+            overflow: hidden;
+         }
+
+         ion-card-content{
+            ion-card-title {
+                font-size: 1.2em !important;
+                color: #fff !important;
+            }
+            p {
+                font-size: 0.8em !important;
+                color: #fff;
+            }
+         }
+    }
+
+    @media screen and (min-width: 283px) and (max-width: 575px){
+        .col{
+            flex-basis: 100% !important;
+        }
     }
 }

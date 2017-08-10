@@ -12,8 +12,8 @@
 <ion-content padding>
     <ion-grid>
         <ion-row>
-            <ion-col col-md-6 *ngFor="let hymnal of hymnalList">
-                <ion-card>
+            <ion-col col-lg-4 col-md-6 col-sm-12 *ngFor="let hymnal of hymnalList">
+                <ion-card (click)="setActiveHymnal(hymnal.id)">
                     <div class="card-image">
                         <img src="{{ 'assets/' + hymnal.image}}" />
                     </div>
@@ -24,13 +24,6 @@
                         <p>
                             {{hymnal.count}} hymnals
                         </p>
-                        <ion-row>
-                            <ion-col offset-10 col-2>
-                                <button ion-button small (click)="setActiveHymnal(hymnal.id)">
-                                  <ion-icon name="return-right"></ion-icon>
-                                </button>
-                            </ion-col>
-                        </ion-row>
                     </ion-card-content>
                 </ion-card>
             </ion-col>

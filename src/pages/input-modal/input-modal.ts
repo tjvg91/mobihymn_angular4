@@ -74,7 +74,7 @@ export class InputModalPage{
     this.viewCtrl.dismiss();
   }
 
-  getIndicator(){
+  getIndicator() : string{
     let limit = this.hymnLimit;
     let length = this.hymnList.length;
     return 'Displaying ' + Math.min(+limit, length) + ' of ' + this.hymnList.length + ' hymns';
