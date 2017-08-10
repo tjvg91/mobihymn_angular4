@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 
 import { Tabs } from 'ionic-angular';
 
-import { AboutPage } from '../about/about';
 import { SettingsPage } from '../settings/settings';
 import { HomePage } from '../home/home';
 import { ReaderPage } from '../reader/reader';
@@ -19,8 +18,7 @@ export class TabsPage {
   tab1Root = HomePage;
   tab2Root = ReaderPage;
   tab3Root = SearchPage;
-  tab4Root = AboutPage;
-  tab5Root = SettingsPage;
+  tab4Root = SettingsPage;
 
   activeHymnal: string;
   activeHymn: string;
