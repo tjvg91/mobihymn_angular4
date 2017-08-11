@@ -1,6 +1,5 @@
-import { Component, ElementRef } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from 'ionic-angular';
-
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, ViewController, NavParams, Searchbar } from 'ionic-angular';
 import { GlobalService } from '../../services/global-service';
 
 import * as _ from 'lodash';
@@ -28,17 +27,17 @@ export class InputModalPage{
   hymnLimit : Number;
   hymnSubscribe: any;
   hymnFilter: string;
-  elementRef: ElementRef
+  @ViewChild('hymnFilter') hymnFilterSearchbar:Searchbar;
+  @ViewChild('bkmkFilter') bkmkFilterSearchbar:Searchbar;
 
   Math: any;
 
   origHymnList : Array<object>;
 
-  constructor(public viewCtrl: ViewController, inputParams: NavParams, elementRef : ElementRef) {
+  constructor(public viewCtrl: ViewController, inputParams: NavParams) {
     this.inputType = "all_hymns";
     this.hymnLimit = 5;  
     this.navParams = inputParams;
-    this.elementRef = elementRef;
   }
 
   dismiss() {
@@ -59,8 +58,14 @@ export class InputModalPage{
     this.origHymnList = this.hymnList.map(x => Object.assign({}, x));
   }
 
+  ngAfterViewInit(){
+    setTimeout(() => {
+      this.hymnFilterSearchbar.setFocus();
+    }, 500);    
+  }
+
   filterHymns(event){
-    let st = this.hymnFilter;
+    let st = event.target.value;
     if(st)
       this.hymnList = this.origHymnList.filter((item) => {
         return new RegExp(st).test(item['number']) || new RegExp(st).test(item['firstLine']);
@@ -78,5 +83,17 @@ export class InputModalPage{
     let limit = this.hymnLimit;
     let length = this.hymnList.length;
     return 'Displaying ' + Math.min(+limit, length) + ' of ' + this.hymnList.length + ' hymns';
+  }
+
+  allHymnSelect(){
+    setTimeout(() => {
+      this.hymnFilterSearchbar.setFocus();
+    }, 200);    
+  }
+
+  bkmkSelect(){
+    setTimeout(() => {
+      this.bkmkFilterSearchbar.setFocus();
+    }, 200);    
   }
 }

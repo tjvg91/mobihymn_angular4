@@ -44,7 +44,9 @@ page-home {
     }
     @media screen and (min-width: 576px) and (max-width: 767px) {
         .col {
-            flex-basis: 1 !important;
+            &[col-md-6]{
+                max-width: 50% !important;
+            }
         }
     }
 }

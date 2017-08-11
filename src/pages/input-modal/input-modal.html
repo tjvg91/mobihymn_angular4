@@ -11,7 +11,7 @@
       </button>
     </ion-buttons>
     <ion-segment [(ngModel)]="inputType">
-        <ion-segment-button value="all_hymns">
+        <ion-segment-button value="all_hymns" (ionSelect)="allHymnSelect()">
             All hymns
         </ion-segment-button>
         <ion-segment-button value="bookmarks">
@@ -26,9 +26,9 @@
 
 <ion-content padding>
     <div [ngSwitch]="inputType">
-        <div *ngSwitchCase="'all_hymns'">
-            <ion-searchbar (ionInput)="filterHymns($event)" [showCancelButton]="true" placeholder="Search hymn" type="number" [(ngModel)]="hymnFilter"></ion-searchbar>
-            <ion-list *ngSwitchCase="'all_hymns'">
+        <div *ngSwitchCase="'all_hymns'" #allHymns>
+            <ion-searchbar (ionInput)="filterHymns($event)" [showCancelButton]="true" placeholder="Search hymn" type="number" [(ngModel)]="hymnTextFilter" #hymnFilter></ion-searchbar>
+            <ion-list>
                 <ion-item *ngFor="let hymn of hymnList | slice:0:hymnLimit;" (click)="setActiveHymn(hymn)">
                     <h2>{{ 'Hymn #' + hymn.title }}</h2>
                     <p>{{ hymn.firstLine }}</p>
@@ -40,14 +40,24 @@
       </ion-infinite-scroll> -->
         </div>
         <div *ngSwitchCase="'bookmarks'">
-            <ion-list *ngSwitchCase="'bookmarks'">
-                <ion-item>
-                    <h2>Luna</h2>
-                </ion-item>
+            <ion-searchbar (ionInput)="filterHymns($event)" [showCancelButton]="true" placeholder="Search bookmarks" type="number" [(ngModel)]="bkmkFilterText" #bkmkFilter></ion-searchbar>
+            <ion-list>
+                <ion-item-sliding *ngFor="let bkmk of bookmarkList" (click)="setActiveHymn(hymn)">
+                    <ion-item-options side="left">
+                        <button ion-button color="primary">
+                            <ion-icon name="text"></ion-icon>
+                            Text
+                        </button>
+                        <button ion-button color="secondary">
+                            <ion-icon name="call"></ion-icon>
+                            Call
+                        </button>
+                    </ion-item-options>
+                </ion-item-sliding>
             </ion-list>
         </div>
         <div *ngSwitchCase="'recent'">
-            <ion-list *ngSwitchCase="'recent'">
+            <ion-list>
                 <ion-item>
                     <h2>Luna</h2>
                 </ion-item>

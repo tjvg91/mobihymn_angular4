@@ -14,6 +14,7 @@
 // automatically applied to the <body> element in the app.
 .content .scroll-content {
     overflow: auto;
+
 }
 
 .alert-wrapper {
@@ -28,4 +29,16 @@
     .alert-radio-label {
         color: #999;
     }
+}
+
+.bar-button-ios{
+    color: #000 !important;
+
+    & + &{
+        margin-left: 10px;
+    }
+}
+
+.list-ios .list-header{
+    color: #999 !important;
 }
