@@ -26,7 +26,7 @@ export class ReaderPage implements OnDestroy{
   currentHymn: object;
   activeHymnal: string;
 
-  constructor(public readerCtrl: NavController, public inputPopCtrl: PopoverController, public inputModalCtrl:        ModalController, global: GlobalService) {
+  constructor(public readerCtrl: NavController, public inputPopCtrl: PopoverController, public inputModalCtrl: ModalController, global: GlobalService) {
     this.myGlobal = global;
     this.hymnSubscribe = global.activeHymnChange.subscribe((value) => {
       let hymnList = this.myGlobal.getHymnList()['hymnal' + this.myGlobal.getActiveHymnal()];

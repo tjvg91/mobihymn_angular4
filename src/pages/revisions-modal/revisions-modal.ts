@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 
 /**
  * Generated class for the RevisionsModalPage page.
@@ -14,12 +14,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'revisions-modal.html',
 })
 export class RevisionsModalPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  revisionString : string;
+  constructor(public viewCtrl: ViewController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RevisionsModalPage');
+    this.revisionString = this.navParams.get('revisionString');
   }
 
+  dismiss(){
+    this.viewCtrl.dismiss();
+  }
 }

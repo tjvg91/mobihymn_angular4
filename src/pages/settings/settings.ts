@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Http, Response } from '@angular/http';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { RevisionsModalPage } from '../../pages/revisions-modal/revisions-modal';
+import { AuthorModalPage } from '../../pages/author-modal/author-modal';
 
 /**
  * Generated class for the SettingsPage page.
@@ -14,12 +17,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  revisionString : string;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public revisionsModal: ModalController, public authorModal: ModalController) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingsPage');
+    this.http.get('../assets/revision.html').map(res => res).subscribe(res => {
+      this.revisionString = res["_body"];
+    })
   }
 
+  showRevisionModal(){
+    let revModal = this.revisionsModal.create(RevisionsModalPage, {
+      "revisionString": this.revisionString
+    });
+    revModal.present();
+  }
+
+  showAuthorModal(){
+    let authModal = this.authorModal.create(AuthorModalPage);
+    authModal.present();
+  }
 }

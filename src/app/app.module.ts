@@ -29,7 +29,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     InputModalPage,
     SettingsPopoverPage,
     AuthorModalPage,
-    AuthorModalPage
+    RevisionsModalPage
   ],
   imports: [
     BrowserModule,
@@ -47,7 +47,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     InputModalPage,
     SettingsPopoverPage,
     AuthorModalPage,
-    AuthorModalPage
+    RevisionsModalPage
   ],
   providers: [
     StatusBar,
