@@ -28,16 +28,23 @@ primary: #ffeb3b, secondary: #32db64, danger: #f53d3d, light: #f4f4f4, dark: #22
 // iOS only Sass variables can go here
 $card-ios-text-color: #ddd;
 $alert-ios-background: #242424;
+$loading-ios-background:#242424;
+$loading-ios-text-color: #ddd;
+$loading-ios-spinner-color: map-get($colors, 'primary');
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 $card-md-text-color: #ddd;
 $alert-md-background: #242424;
+$loading-md-background: #242424;
+$loading-md-text-color: #ddd;
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
 $card-wp-text-color: #ddd;
 $alert-wp-background: #242424;
+$loading-wp-background: #242424;
+$loading-wp-text-color: #ddd;
 // App Theme
 // --------------------------------------------------
 // Ionic apps can have different themes applied, which can

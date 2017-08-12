@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Searchbar, LoadingController, Loading } from 'ionic-angular';
+import * as _ from 'lodash';
+import * as $ from 'jquery';
 
 import { GlobalService } from '../../services/global-service';
 
@@ -16,14 +18,79 @@ import { GlobalService } from '../../services/global-service';
   templateUrl: 'search.html',
 })
 export class SearchPage {
-  myGlobal: GlobalService;
-  constructor(public navCtrl: NavController, public navParams: NavParams, global : GlobalService) {
-    this.myGlobal = global;
+  @ViewChild('searchHymn') hymnFilterSearchbar:Searchbar;
+  hymnList: object;
+  activeHymnal: string;
+  searchItems: Array<object>;  
+  searchLoader: Loading;
+
+  constructor(public searchCtrl: NavController, private loadingCtrl: LoadingController, public navParams: NavParams, private global : GlobalService) {
     console.log(global);
+    this.hymnList = global.getHymnList();
+    this.activeHymnal = global.getActiveHymnal();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchPage');
+  ngAfterViewInit(){
+    setTimeout(() => {
+      this.hymnFilterSearchbar.setFocus();
+    }, 500);    
   }
 
+  getItems(event){
+    let th = this;
+    setTimeout(function() {
+      let st = event.target.value;
+      let activeHymnal = th.activeHymnal;
+      th.searchItems = new Array<object>();
+      let searchItems = th.searchItems
+      th.hymnList['hymnal' + activeHymnal].forEach(hymn => {
+        let lyrics = $(hymn.lyrics);
+        let lines = lyrics.find('.hymn-line').filter(function(index, item){
+          return new RegExp(st, "gi").test(item.textContent.replace(/,\;\.!\"\:\?/, ""));
+        });
+        if(lines.length > 0){
+          lines.each(function(ind, line){
+            if(searchItems.findIndex(i => i['number'] == hymn['number'] && i['line'] == line.textContent) < 0){
+              searchItems.push({
+                'id': hymn['id'],
+                'number': hymn['number'],
+                'line': line.textContent
+              });  
+            }
+          })
+        }
+      });
+      th.searchItems.sort(th.sortByLine);
+      th.closeLoader();
+    }, 100);
+    this.showLoader();
+  }
+
+  showLoader() {
+    this.searchLoader = this.loadingCtrl.create({
+      content: 'Searching...',
+      spinner: 'circles'
+    });
+
+    this.searchLoader.present();
+  }
+
+  closeLoader(){
+    this.searchLoader.dismiss();
+  }
+
+  goToReader(hymnId){
+    this.global.setActiveHymn(hymnId);
+    this.searchCtrl.parent.select(1);
+  }
+
+  sortByLine (a,b) {
+    var a1 = a.line.replace(/^\"/, "");
+    var b1 = b.line.replace(/^\"/, "");
+    if (a1 < b1)
+        return -1;
+    if ( a1 > b1 )
+        return 1;
+    return 0;
+  }
 }
