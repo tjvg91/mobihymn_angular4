@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Searchbar, LoadingController, Loading } from 'ionic-angular';
-import * as _ from 'lodash';
 import * as $ from 'jquery';
 
 import { GlobalService } from '../../services/global-service';

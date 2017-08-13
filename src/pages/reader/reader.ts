@@ -25,6 +25,8 @@ export class ReaderPage implements OnDestroy{
   hymnSubscribe: any;
   currentHymn: object;
   activeHymnal: string;
+  isBookmarked: bool;
+  confirmUnbookmark: any;
 
   constructor(public readerCtrl: NavController, public inputPopCtrl: PopoverController, public inputModalCtrl: ModalController, global: GlobalService) {
     this.myGlobal = global;
@@ -35,6 +37,24 @@ export class ReaderPage implements OnDestroy{
         return item.id == activeHymn;
       })[0];
     });
+
+      this.confirmUnbookmark = this.alertCtrl.create({
+        title: 'Confirm removal',
+        message: 'Are you sure you want to remove bookmark?',
+        buttons: [
+          {
+            text: 'No',
+            handler: () => {}
+          },
+          {
+            text: 'Yes',
+            handler: () => {
+              console.log('Agree clicked');
+            }
+          }
+        ]
+      }
+    );
   }
 
   presentPopover(myEvent) {
@@ -62,7 +82,7 @@ export class ReaderPage implements OnDestroy{
     this.currentHymn = _.filter(hymnList, function(item){
       return item.id == activeHymn;
     })[0];
-    
+    isBookmarked = this.myGlobal.isInBookmark(this.activeHymnal, this.currentHymn);
   }
 
   ngOnDestroy(){
@@ -71,5 +91,20 @@ export class ReaderPage implements OnDestroy{
 
   goToTab(index){
     this.readerCtrl.parent.select(index);
+  }
+
+  toggleBookmark(){
+    if(isBookmarked){
+      confirmUnbookmark.present();
+    }
+    else{
+      this.myGlobal.addToBookmarks({
+        'hymnalId': this.activeHymnal,
+        'hymnId': this.currentHymn['id'],
+        'firstLine': this.currentHymn['firstLine'],
+        'number': this.currentHymn['number'],
+        'title': this.currentHymn['title']
+      });
+    }
   }
 }

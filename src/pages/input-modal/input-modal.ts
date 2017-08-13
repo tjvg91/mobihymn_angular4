@@ -27,6 +27,7 @@ export class InputModalPage{
   hymnLimit : Number;
   hymnSubscribe: any;
   hymnFilter: string;
+  recentList: Array<object>;
   @ViewChild('hymnFilter') hymnFilterSearchbar:Searchbar;
   @ViewChild('bkmkFilter') bkmkFilterSearchbar:Searchbar;
 
@@ -56,6 +57,7 @@ export class InputModalPage{
     })[0].number;
 
     this.origHymnList = this.hymnList.map(x => Object.assign({}, x));
+    this.recentList = this.myGlobal.getRecentList();
   }
 
   ngAfterViewInit(){
@@ -74,8 +76,8 @@ export class InputModalPage{
       this.hymnList = this.origHymnList;
   }
 
-  setActiveHymn(hymn){
-    this.myGlobal.setActiveHymn(hymn['id']);
+  setActiveHymn(hymnId){
+    this.myGlobal.setActiveHymn(hymnId);
     this.viewCtrl.dismiss();
   }
 
