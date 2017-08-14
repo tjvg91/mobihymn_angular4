@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, ViewController, NavParams, Searchbar } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, Searchbar, AlertController, ToastController } from 'ionic-angular';
 import { GlobalService } from '../../services/global-service';
 
 import * as _ from 'lodash';
@@ -28,6 +28,8 @@ export class InputModalPage{
   hymnSubscribe: any;
   hymnFilter: string;
   recentList: Array<object>;
+  bookmarkList: Array<object>;
+
   @ViewChild('hymnFilter') hymnFilterSearchbar:Searchbar;
   @ViewChild('bkmkFilter') bkmkFilterSearchbar:Searchbar;
 
@@ -35,7 +37,7 @@ export class InputModalPage{
 
   origHymnList : Array<object>;
 
-  constructor(public viewCtrl: ViewController, inputParams: NavParams) {
+  constructor(public viewCtrl: ViewController, inputParams: NavParams, private alertCtrl: AlertController, private toastCtrl: ToastController) {
     this.inputType = "all_hymns";
     this.hymnLimit = 5;  
     this.navParams = inputParams;
@@ -58,6 +60,7 @@ export class InputModalPage{
 
     this.origHymnList = this.hymnList.map(x => Object.assign({}, x));
     this.recentList = this.myGlobal.getRecentList();
+    this.bookmarkList = this.myGlobal.getBookmarksList();
   }
 
   ngAfterViewInit(){
@@ -97,5 +100,34 @@ export class InputModalPage{
     setTimeout(() => {
       this.bkmkFilterSearchbar.setFocus();
     }, 200);    
+  }
+
+  presentConfirmUnbookmark(){
+    let confirmUnbookmark = this.alertCtrl.create({
+      title: 'Confirm removal',
+      message: 'Are you sure you want to remove bookmark?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {}
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.myGlobal.removeFromBookmarks(this.activeHymnal, this.activeHymn);
+            this.presentUnbookmarkConfirmed();
+          }
+        }
+      ]
+    });
+    confirmUnbookmark.present();
+  }
+
+    presentUnbookmarkConfirmed(){
+    let confirmedUnbookmark = this.toastCtrl.create({
+      message: 'Bookmark removed',
+      duration: 3000
+    });
+    confirmedUnbookmark.present();
   }
 }

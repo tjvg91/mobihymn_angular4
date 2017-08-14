@@ -42,15 +42,15 @@
         <div *ngSwitchCase="'bookmarks'">
             <ion-searchbar (ionInput)="filterHymns($event)" [showCancelButton]="true" placeholder="Search bookmarks" type="number" [(ngModel)]="bkmkFilterText" #bkmkFilter></ion-searchbar>
             <ion-list>
-                <ion-item-sliding *ngFor="let bkmk of bookmarkList" (click)="setActiveHymn(hymn['id'])">
+                <ion-item-sliding *ngFor="let bkmk of bookmarkList" (click)="setActiveHymn(bkmk['hymnId'])">
+                    <ion-item>
+                        <h2>{{ bkmk['firstLine'] }}</h2>
+                        <p>Hymn #{{ bkmk['title'] }}</p>
+                    </ion-item>
                     <ion-item-options side="left">
-                        <button ion-button color="primary">
-                            <ion-icon name="text"></ion-icon>
-                            Text
-                        </button>
-                        <button ion-button color="secondary">
-                            <ion-icon name="call"></ion-icon>
-                            Call
+                        <button ion-button color="primary" (click)="presentConfirmUnbookmark()">
+                            <ion-icon name="close"></ion-icon>
+                            Remove
                         </button>
                     </ion-item-options>
                 </ion-item-sliding>

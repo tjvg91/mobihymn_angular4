@@ -120,6 +120,6 @@ export class GlobalService {
     }
 
     isInBookmark(hymnalId, hymnId){
-        return this.bookmarks.findIndex(i => i['hymnalId'] == hymnalId && i['hymnId'] == hymnalId) >= 0;
+        return this.bookmarks.findIndex(i => i['hymnalId'] == hymnalId && i['hymnId'] == hymnId) >= 0;
     }
 }
