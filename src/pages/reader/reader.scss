@@ -1,3 +1,19 @@
+@mixin verse-without-refrain {
+    @for $i from 2 through 10 {
+        .hymn-stanza+.hymn-stanza:nth-child(#{$i}):before {
+            content: quote("Stanza #{$i}:");
+        }
+    }
+}
+
+@mixin verse-with-refrain {
+    @for $i from 2 through 10 {
+        .hymn-refrain+.hymn-stanza:nth-child(#{$i * 2 - 1}):before {
+            content: quote("Stanza #{$i}:");
+        }
+    }
+}
+
 page-reader {
     .scroll-content{
         background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../assets/images/Congregation%20Singing.jpg');
@@ -19,6 +35,32 @@ page-reader {
                     line-height: 150%;
                 }
             }
+
+            .hymn-refrain {
+                display: block;
+                margin-bottom: 20px;
+                
+                .hymn-line{
+                    display: block;
+                    line-height: 150%;
+                }
+            }
+
+            .hymn-stanza:before {
+                display: block; 
+            }
+
+            .hymn-refrain:before {
+                display: block;
+                content: "Refrain:"; 
+            }
+
+            .hymn-stanza:nth-child(1):before {
+                content: "Stanza 1:"; 
+            }
         }
     }    
 }
+
+@include verse-without-refrain;
+@include verse-with-refrain;
