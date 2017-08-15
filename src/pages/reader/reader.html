@@ -25,9 +25,9 @@
 </ion-header>
 
 <ion-content padding>
-    <div class="hymn-content" *ngIf="currentHymn">
+    <div class="hymn-content" *ngIf="currentHymn" (pinch)="pinchZoom($event)">
         <h2 class="hymn-title">Hymn #{{ currentHymn.title }}</h2>
-        <div class="lyrics" [innerHTML]="currentHymn.lyrics">
+        <div class="lyrics" [innerHTML]="currentHymn.lyrics" #lyricsContainer>
         </div>
     </div>
 
