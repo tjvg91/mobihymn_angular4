@@ -76,7 +76,7 @@ export class ReaderPage implements OnDestroy{
 
     this.bookmarksSubscribe = global.bookmarksChange.subscribe((value) => {
       this.isBookmarked = global.isInBookmark(this.activeHymnal, this.currentHymn['id']);
-    });    
+    });
   }
 
   presentPopover(myEvent) {
