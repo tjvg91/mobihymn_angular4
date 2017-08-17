@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 
 import { Tabs } from 'ionic-angular';
 
@@ -23,7 +23,7 @@ export class TabsPage {
   activeHymnal: string;
   activeHymn: string;
 
-  @ViewChild('#myTabs') tabRef: Tabs;
+  @ViewChild('#myTabs') public tabRef: Tabs;
 
   constructor(myGlobal : GlobalService) {
     this.activeHymnal = myGlobal.getActiveHymnal();

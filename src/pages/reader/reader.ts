@@ -1,5 +1,7 @@
-import { Component, OnDestroy, ViewChild, ElementRef, trigger, state, style, transition, animate } from '@angular/core';
-import { IonicPage, NavController, PopoverController, ModalController, AlertController, ToastController, Gesture } from 'ionic-angular';
+import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
+import { IonicPage, NavController, PopoverController, ModalController, AlertController, ToastController, Gesture, FabButton, Content } from 'ionic-angular';
 import { GlobalService } from '../../services/global-service';
 import { InputModalPage } from '../../pages/input-modal/input-modal';
 import { SettingsPopoverPage } from '../../pages/settings-popover/settings-popover';
@@ -30,40 +32,10 @@ import * as _ from 'lodash';
     ]),
     trigger('slideUp', [
       state('up', style({
-        transform: 'translate(0px, -44px)'
+        transform: 'translate(0px, -56px)'
       })),
       state('down', style({
         transform: 'translate(0px, 0px)'
-      })),
-      transition('up => down', animate('500ms ease')),
-      transition('down => up', animate('500ms ease'))
-    ]),
-    trigger('slideDown', [
-      state('down', style({
-        transform: 'translate(0px, 49px)'
-      })),
-      state('up', style({
-        transform: 'translate(0px, 0px)'
-      })),
-      transition('up => down', animate('500ms ease')),
-      transition('down => up', animate('500ms ease'))
-    ]),
-    trigger('margDown', [
-      state('down', style({
-        marginBottom: '0'
-      })),
-      state('up', style({
-        marginBottom: '49px'
-      })),
-      transition('up => down', animate('500ms ease')),
-      transition('down => up', animate('500ms ease'))
-    ]),
-    trigger('margUp', [
-      state('up', style({
-        marginTop: '0px'
-      })),
-      state('dpwn', style({
-        marginTop: '44px'
       })),
       transition('up => down', animate('500ms ease')),
       transition('down => up', animate('500ms ease'))
@@ -83,12 +55,13 @@ export class ReaderPage implements OnDestroy{
 
   scaleState: string = 'shown';
   slideUpState: string = 'down';
-  slideDownState: string = 'up';
-  margUpState: string = 'down';
-  margDownState: string = 'up';
 
   private lyricsContainer: HTMLElement;
-  @ViewChild('lyricsContainer') lyricsContainerRef: ElementRef;
+  @ViewChild('lyricsContainer') lyricsContainerRef: Content;
+  @ViewChild('btnPlay') btnPlayElemRef: FabButton;
+  @ViewChild('readerHeader') divHeader: ElementRef;
+  scrollContent: any;
+  divTab: any;
 
   constructor(public readerCtrl: NavController, public inputPopCtrl: PopoverController, public inputModalCtrl: ModalController, global: GlobalService, private alertCtrl: AlertController, private toastCtrl: ToastController) {
     this.myGlobal = global;
@@ -103,9 +76,7 @@ export class ReaderPage implements OnDestroy{
 
     this.bookmarksSubscribe = global.bookmarksChange.subscribe((value) => {
       this.isBookmarked = global.isInBookmark(this.activeHymnal, this.currentHymn['id']);
-    });
-
-    
+    });    
   }
 
   presentPopover(myEvent) {
@@ -171,11 +142,14 @@ export class ReaderPage implements OnDestroy{
       return item.id == activeHymn;
     })[0];
     this.isBookmarked = this.myGlobal.isInBookmark(this.activeHymnal, this.currentHymn);
+    this.scrollContent = this.lyricsContainerRef._elementRef.nativeElement.querySelector('.scroll-content');
+    this.divTab = this.readerCtrl.parent._elementRef.nativeElement.querySelector('.tabbar');
+    console.log(this.divTab);
   }
 
   ngAfterViewInit(){
     setTimeout(() => {
-      this.lyricsContainer = this.lyricsContainerRef.nativeElement;
+      this.lyricsContainer = this.lyricsContainerRef._elementRef.nativeElement;
       this.gesture = new Gesture(this.lyricsContainer);
       this.gesture.listen();
       this.gesture.on('pinch', e => this.pinchZoom(e));      
@@ -211,6 +185,46 @@ export class ReaderPage implements OnDestroy{
   }
 
   toggleFullLyrics(){
+    if(this.scaleState == 'shown'){
+      this.scrollContent.animate([
+        { offset: 0, 'margin': '56px 0 56px 0' },
+        { offset: 1, 'margin': '0 0 0 0' }
+      ],{
+        duration: 500,
+        easing: 'ease',
+        fill: 'forwards'
+      });
+      this.divTab.animate([
+        { offset: 0, 'transform': 'translate(0, 0)' },
+        { offset: 1, 'transform': 'translate(0, 56px)' }
+      ],{
+        duration: 500,
+        easing: 'ease',
+        fill: 'forwards'
+      });
+      this.slideUpState = 'up';
+      this.scaleState = 'hidden';
+    }
+    else{
+      this.scrollContent.animate([
+        { offset: 0, margin: '0 0 0 0' },
+        { offset: 1, margin: '56px 0 56px 0' }
+      ],{
+        duration: 500,
+        easing: 'ease',
+        fill: 'forwards'
+      });
+      this.divTab.animate([
+        { offset: 0, 'transform': 'translate(0, 56px)' },
+        { offset: 1, 'transform': 'translate(0, 0)' }
+      ],{
+        duration: 500,
+        easing: 'ease',
+        fill: 'forwards'
+      });
 
+      this.slideUpState = 'down';
+      this.scaleState = 'shown';
+    }
   }
 }
